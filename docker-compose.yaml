@@ -1,0 +1,11 @@
+services:
+  notifications-service:
+    image: samarkinivan/notifications-service:latest
+    container_name: notifications-service
+    restart: on-failure
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
