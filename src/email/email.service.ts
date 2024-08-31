@@ -12,10 +12,7 @@ export class EmailService {
 
     const template = emailTemplateMapper[emailTemplate]({
       recipient,
-      context: {
-        confirmToken: data.confirmToken,
-        recipientName: data.recipientName,
-      },
+      context: data,
     });
 
     await this.mailerService.sendMail(template);

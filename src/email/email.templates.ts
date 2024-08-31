@@ -1,19 +1,26 @@
-import { ConfirmRegistrationTemplateArgs, EmailTemplate } from './email.types';
+import { EmailTemplate, SendEmailTemplateArgs } from './email.types';
 
-const getConfirmRegistrationTemplate = (
-  args: ConfirmRegistrationTemplateArgs,
-) => ({
+const getConfirmRegistrationTemplate = (args: SendEmailTemplateArgs) => ({
   to: args.recipient,
-  subject: 'Welcome to FastAI! Confirm your Email',
+  subject: 'Confirm Your Email',
   template: './confirm-registration',
   context: {
     name: args.context.recipientName,
-    url: `example.com/auth/confirm?token=${args.context.confirmToken}`,
+    link: args.context.confirmationLink,
   },
 });
 
-const emailTemplateMapper = {
-  [EmailTemplate.ConfirmRegistration]: getConfirmRegistrationTemplate,
-};
+const getResetPasswordTemplate = (args: SendEmailTemplateArgs) => ({
+  to: args.recipient,
+  subject: 'Reset Your Password',
+  template: './reset-password',
+  context: {
+    name: args.context.recipientName,
+    link: args.context.resetPasswordLink,
+  },
+});
 
-export { emailTemplateMapper };
+export const emailTemplateMapper = {
+  [EmailTemplate.ConfirmRegistration]: getConfirmRegistrationTemplate,
+  [EmailTemplate.ResetPassword]: getResetPasswordTemplate,
+};
