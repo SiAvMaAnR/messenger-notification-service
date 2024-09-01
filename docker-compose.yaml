@@ -3,6 +3,8 @@ services:
     image: samarkinivan/notifications-service:latest
     container_name: notifications-service
     restart: on-failure
+    ports:
+      - '8081:8081'
     networks:
       - app-network
 
