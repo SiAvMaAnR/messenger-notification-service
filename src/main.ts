@@ -11,15 +11,9 @@ async function bootstrap() {
   });
 
   const configService = app.get(ConfigService);
-
   const appPort = configService.get<number>('app.port');
-  const rmqQueue = configService.get<string>('rmq.queue');
-  const rmqUrl = configService.get<string>('rmq.url');
 
-  const rmqConfig = rabbitMQConfig({
-    queue: rmqQueue,
-    urls: [rmqUrl],
-  });
+  const rmqConfig = getRMQConfig(configService);
 
   app.connectMicroservice<MicroserviceOptions>(rmqConfig);
 
@@ -28,4 +22,19 @@ async function bootstrap() {
   await app.startAllMicroservices();
   await app.listen(appPort);
 }
+
+function getRMQConfig(
+  configService: ConfigService<unknown, boolean>,
+): MicroserviceOptions {
+  const rmqQueue = configService.get<string>('rmq.queue');
+  const rmqUrl = configService.get<string>('rmq.url');
+
+  const rmqConfig = rabbitMQConfig({
+    queue: rmqQueue,
+    urls: [rmqUrl],
+  });
+
+  return rmqConfig;
+}
+
 bootstrap();
