@@ -11,7 +11,7 @@ services:
       MAIL_FROM: 'samarkin20022002@gmail.com'
       MAIL_PORT: 587
       RMQ_QUEUE: 'notifications-queue'
-      RMQ_URL: 'amqp://rabbitmq:5672'
+      RMQ_URL: 'rabbitmq:5672'
     ports:
       - '8084:8084'
     networks:
